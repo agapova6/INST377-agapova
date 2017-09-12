@@ -1,1 +1,1 @@
-Hello! My name is Anastasia Agapova. sobaka.
+Hello! My name is Anastasia Agapova.
