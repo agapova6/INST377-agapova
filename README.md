@@ -1,9 +1,7 @@
+Hello! My name is Anastasia Agapova. My web development goals include learning PHP, being able to conceptualize how dynamic web pages are made, learning how to run a web server, and understanding web development as an integral part of web design. I hope that by taking this INST377 class I will be able to design web pages in a way that considers and works with the web development process.
 
-
-Hello! My name is Anastasia Agapova. meow. MEOWWWWWWW!!! =^.^=
-MORE CONTENT FOR TESTING GIT!!!
+In my free time I enjoy watching movies and knitting winter accessories. Nice to meet you! 
 
 <p align="center">
-  <img src="https://www.almanac.com/sites/default/files/daisy_april_birth_flower_1920x1280px_pixabay.jpg" width="350"/>
+  <img src="http://www.centralsquareflorist.com/images/item/zoom_147205z-16101241450.jpg" width="350"/>
 </p>
-THERE IS A PICTURE HERE!!!!!!!!!!!
