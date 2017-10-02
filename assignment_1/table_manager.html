@@ -3,7 +3,7 @@
 <!-- CSS -->
 <style type="text/css">
 	div {
-		margin: 20px 20px 20px 20px;
+	    margin: 20px 20px 20px 20px;
 	}
 	
 	p {
@@ -13,33 +13,33 @@
 	    font-weight: bold;  
 	}
 	
-    table{
-        font-size: 12px;
-        font-family: Georgia, serif;
-        border: 1px solid black;
-        width: 100%;
-    }
-    
-    tbody{
+	table{
+            font-size: 12px;
+            font-family: Georgia, serif;
+            border: 1px solid black;
+            width: 100%;
+    	}
+   
+	tbody{
 	    background-color: #e9d2ef;
 	}
 
-    td {
-        font-family: Georgia, serif;
-    } 
+   	td {
+            font-family: Georgia, serif;
+    	} 
 
-    th { 
-        font-size: 15px;
-        font-family: Georgia, serif;
-        color: #50225d; 
-        font-weight: bold;       
-        border: 2px solid black; 
-        background-color: #b46ac8;
-    }
-    
-    tr.org_table_row:hover {
-       background-color: #FFFF4C;
-    } /* for all hovered tr-elements within an element with id="org_table", change row color */
+    	th { 
+            font-size: 15px;
+            font-family: Georgia, serif;
+            color: #50225d; 
+            font-weight: bold;       
+            border: 2px solid black; 
+            background-color: #b46ac8;
+   	}
+   
+	tr.org_table_row:hover {
+      	    background-color: #FFFF4C;
+    	} /* for all hovered tr-elements within an element with id="org_table", change row color */
 
 </style>
 
@@ -240,6 +240,7 @@ var organizations = [
 
 <p>Organizations table:</p>
 <div id="org_table"></div>
+	
 <p>Statistics table:</p>
 <div id="stat_table"></div>
 
@@ -249,7 +250,7 @@ console.log(organizations[0]);
 
 // Your JavaScript code goes here
 
-function create_table(organizations) {
+function dynamic_table(organizations) {
     //creating a dynamic table
     var table = document.createElement("table");
 
@@ -287,7 +288,7 @@ function create_table(organizations) {
             var row_index = this.rowIndex; //get the index of this row
             this.parentElement.removeChild(this); //remove that row
             organizations.splice(row_index-1, 1); //remove that row from the organizations array,-1 due to the array enumerations
-            create_stats_table(organizations); //create the stats table all over again
+            stats_table(organizations); //create the stats table all over again
         }
     }
 
@@ -415,7 +416,7 @@ function africa_location(organizations) {
 }
   
 //statistics table function   
-function create_stats_table(organizations) {
+function stats_table(organizations) {
     var table = document.createElement("table");
     var row = table.insertRow(0);
     var row2 = table.insertRow(1);
@@ -481,8 +482,8 @@ function create_stats_table(organizations) {
 
 }
 
-create_table(organizations);
-create_stats_table(organizations);
+dynamic_table(organizations);
+stats_table(organizations);
 
 
 </script>
