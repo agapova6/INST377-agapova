@@ -3,15 +3,52 @@
 <!-- CSS -->
 <style type="text/css">
 	div {
-		margin-bottom: 20px;
+		margin: 20px 20px 20px 20px;
 	}
+	
+	p {
+	    margin-top: 20px;
+	    text-align: center;
+	    font-size: 25px;
+	    font-weight: bold;  
+	}
+	
+    table{
+        font-size: 12px;
+        font-family: Georgia, serif;
+        border: 1px solid black;
+        width: 100%;
+    }
+    
+    tbody{
+	    background-color: #e9d2ef;
+	}
+
+    td {
+        font-family: Georgia, serif;
+    } 
+
+    th { 
+        font-size: 15px;
+        font-family: Georgia, serif;
+        color: #50225d; 
+        font-weight: bold;       
+        border: 2px solid black; 
+        background-color: #b46ac8;
+    }
+    
+    tr.org_table_row:hover {
+       background-color: #FFFF4C;
+    } /* for all hovered tr-elements within an element with id="org_table", change row color */
+
 </style>
 
 <!-- Data -->
 <script>
+
 // Don't copy this to any other places in this file. You can just use the "organizations" variable to do your assignment. 
 var organizations = [
-	 {
+	{
         "Region": "East Asia & Pacific",
         "Country": "New Zealand",
         "Country Income Level": "High income",
@@ -193,18 +230,261 @@ var organizations = [
     }
 	
 ];
+
 </script>
 
 </head>
 
 <body>
 <!-- Feel free to add empty tags. Data shouldn't be here. -->
-	<div id="org_table"></div>
+
+<p>Organizations table:</p>
+<div id="org_table"></div>
+<p>Statistics table:</p>
+<div id="stat_table"></div>
 
 <script>
 // outputs the first item of the organizations array. Just for testing.
 console.log(organizations[0]); 
+
 // Your JavaScript code goes here
+
+function create_table(organizations) {
+    //creating a dynamic table
+    var table = document.createElement("table");
+
+    //creating a tr element called "row" and adding it to the 0th position of the table.
+    var row = table.insertRow(-1);   
+    
+    //creating table headers (columns)
+    var columns = []; //build an array that holds the header information in columns
+    for (var i = 0; i < Object.keys(organizations).length; i++) { //using the number of keys in organizations object
+        for (var keys in organizations[i]) {
+            if (columns.indexOf(keys) == -1) {
+                columns.push(keys); //adding new data to the array
+            }
+        }
+    }                
+    
+    //adding rows
+    for (var i = 0; i < columns.length; i++) { //length counting for array
+        var add_row = document.createElement("th");
+        add_row.innerHTML = columns[i];
+        row.appendChild(add_row);
+    }    
+        
+    //adding the data
+    for (var i = 0; i < Object.keys(organizations).length; i++) { //length counting for object
+        var row = table.insertRow(i+1);
+        row.className = "org_table_row"; //create a tag to later use in the CSS hover
+
+        for (var x = 0; x < columns.length; x++) {
+          var cell = row.insertCell(-1);
+          cell.innerHTML = organizations[i][columns[x]];
+        }
+            
+        row.onclick = function () { //as the row is clicked
+            var row_index = this.rowIndex; //get the index of this row
+            this.parentElement.removeChild(this); //remove that row
+            organizations.splice(row_index-1, 1); //remove that row from the organizations array,-1 due to the array enumerations
+            create_stats_table(organizations); //create the stats table all over again
+        }
+    }
+
+    //adding the table to div org_table above
+    var div_container = document.getElementById("org_table");
+    div_container.innerHTML = ""; //clear any content previously there
+    div_container.appendChild(table);
+
+
+}
+
+//Statistics functions
+
+//calculating number of high income countries
+function high_income(organizations) {
+    var high_income_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var income = org["Country Income Level"];
+        if (income == "High income") {
+            high_income_counter++;
+        }
+     }
+     return high_income_counter;
+}
+
+//calculating number of organizations founded after 2000
+function after_2000(organizations) {
+    var after_2000_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var year = org["Founding Year"];
+        if (year > 2000) {
+            after_2000_counter++;
+        }
+     }
+     return after_2000_counter;
+}
+
+//calculating number of for-profit type organizations
+function for_profit(organizations) {
+    var for_profit_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var type = org["Organization Type"];
+        if (type == "For-profit") {
+            for_profit_counter++;
+        }
+     }
+     return for_profit_counter;
+}
+
+//calculating number of organizations
+function total_organizations(organizations) {
+    var total_orgs_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        total_orgs_counter++;
+    }
+    return total_orgs_counter;
+}
+
+//calculating number of organizations in North America
+function north_america_location(organizations) {
+    var north_america_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var loc = org["Region"];
+        if (loc == "North America") {
+            north_america_counter++;
+        }
+    }
+    return north_america_counter;
+}
+
+//calculating number of organizations in Latin America & the Caribbean
+function latin_america_caribbean_location(organizations) {
+    var latin_america_caribbean_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var loc = org["Region"];
+        if (loc == "Latin America & Caribbean") {
+            latin_america_caribbean_counter++;
+        }
+    }
+    return latin_america_caribbean_counter;
+}
+    
+//calculating number of organizations in East Asia & Pacific    
+function east_asia_pacific_location(organizations) {
+    var east_asia_pacific_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var loc = org["Region"];
+        if (loc == "East Asia & Pacific") {
+            east_asia_pacific_counter++;
+        }
+    }
+    return east_asia_pacific_counter;
+}   
+    
+//calculating number of organizations in Europe & Central Asia
+function europe_central_asia_location(organizations) {
+    var europe_central_asia_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var loc = org["Region"];
+        if (loc == "Europe & Central Asia") {
+            europe_central_asia_counter++;
+        }
+    }
+    return europe_central_asia_counter;
+}  
+
+//calculating number of organizations in Africa
+function africa_location(organizations) {
+    var africa_counter = 0;
+    for (var i = 0; i < organizations.length; i++) {
+        var org = organizations[i];
+        var loc = org["Region"];
+        if (loc == "Africa") {
+            africa_counter++;
+        }
+    }
+    return africa_counter;
+}
+  
+//statistics table function   
+function create_stats_table(organizations) {
+    var table = document.createElement("table");
+    var row = table.insertRow(0);
+    var row2 = table.insertRow(1);
+    var row3 = table.insertRow(2);
+    var row4 = table.insertRow(3);
+    var row5 = table.insertRow(4);
+    var row6 = table.insertRow(5);
+    var row7 = table.insertRow(6);
+    var row8 = table.insertRow(7);
+    var row9 = table.insertRow(8);
+
+    var cell1_1 = row.insertCell(0);
+    var cell2_1 = row.insertCell(1);
+    
+    var cell1_2 = row2.insertCell(0);
+    var cell2_2 = row2.insertCell(1);
+    
+    var cell1_3 = row3.insertCell(0);
+    var cell2_3 = row3.insertCell(1);
+    
+    var cell1_4 = row4.insertCell(0);
+    var cell2_4 = row4.insertCell(1);
+    
+    var cell1_5 = row5.insertCell(0);
+    var cell2_5 = row5.insertCell(1);
+    
+    var cell1_6 = row6.insertCell(0);
+    var cell2_6 = row6.insertCell(1);
+ 
+    var cell1_7 = row7.insertCell(0);
+    var cell2_7 = row7.insertCell(1);
+    
+    var cell1_8 = row8.insertCell(0);
+    var cell2_8 = row8.insertCell(1);
+    
+    var cell1_9 = row9.insertCell(0);
+    var cell2_9 = row9.insertCell(1);
+
+    cell1_1.innerHTML = "Total number of high income organizations:";
+    cell2_1.innerHTML = high_income(organizations); 
+    cell1_2.innerHTML = "Total number of organizations:";
+    cell2_2.innerHTML = total_organizations(organizations);
+    cell1_3.innerHTML = "Total number of organizations in North America:";
+    cell2_3.innerHTML = north_america_location(organizations);
+    cell1_4.innerHTML = "Total number of organizations in Latin America & the Caribbean:";
+    cell2_4.innerHTML = latin_america_caribbean_location(organizations);
+    cell1_5.innerHTML = "Total number of organizations in East Asia & Pacific:";
+    cell2_5.innerHTML = east_asia_pacific_location(organizations);
+    cell1_6.innerHTML = "Total number of organizations in Africa:";
+    cell2_6.innerHTML = africa_location(organizations);
+    cell1_7.innerHTML = "Total number of organizations in Europe & Central Asia:";
+    cell2_7.innerHTML = europe_central_asia_location(organizations);
+    cell1_8.innerHTML = "Total number of organizations founded after 2000:";
+    cell2_8.innerHTML = after_2000(organizations);
+    cell1_9.innerHTML = "Total number of for-profit organizations:";
+    cell2_9.innerHTML = for_profit(organizations);
+    
+    
+    //creating the statistics table
+    var div_container = document.getElementById("stat_table");
+    div_container.innerHTML = ""; //clearing the previous table to allow for only the updated one to display
+    div_container.appendChild(table);
+
+}
+
+create_table(organizations);
+create_stats_table(organizations);
+
+
 </script>
 
 </body>
