@@ -251,30 +251,30 @@ console.log(organizations[0]);
 // Your JavaScript code goes here
 
 function dynamic_table(organizations) {
-    //creating a dynamic table
+    //1. creating a dynamic table
     var table = document.createElement("table");
-
-    //creating a tr element called "row" and adding it to the 0th position of the table.
-    var row = table.insertRow(-1);   
     
-    //creating table headers (columns)
+    //2. creating columns (table headers)
     var columns = []; //build an array that holds the header information in columns
     for (var i = 0; i < Object.keys(organizations).length; i++) { //using the number of keys in organizations object
         for (var keys in organizations[i]) {
-            if (columns.indexOf(keys) == -1) {
-                columns.push(keys); //adding new data to the array
+            if (columns.indexOf(keys) == -1) { //adding data backwards (from bottom)
+                columns.push(keys); //inserting new data to the array
             }
         }
     }                
     
-    //adding rows
+    //3. creating and adding all rows - creating a tr element called "row" and adding it to the 0th position of the table.
+    var row = table.insertRow(-1);   
+    
+    //4. adding header row
     for (var i = 0; i < columns.length; i++) { //length counting for array
-        var add_row = document.createElement("th");
-        add_row.innerHTML = columns[i];
-        row.appendChild(add_row);
+        var header = document.createElement("th");
+        header.innerHTML = columns[i];
+        row.appendChild(header);
     }    
         
-    //adding the data
+    //5. adding the data
     for (var i = 0; i < Object.keys(organizations).length; i++) { //length counting for object
         var row = table.insertRow(i+1);
         row.className = "org_table_row"; //create a tag to later use in the CSS hover
@@ -292,7 +292,7 @@ function dynamic_table(organizations) {
         }
     }
 
-    //adding the table to div org_table above
+    //6. adding the table to div org_table above
     var div_container = document.getElementById("org_table");
     div_container.innerHTML = ""; //clear any content previously there
     div_container.appendChild(table);
