@@ -60,7 +60,7 @@ echo "Connected successfully<br><br>";
 function query_to_db($conn, $sql){
     $result = mysqli_query($conn, $sql);
     if ($result) {   
-        echo "Your query was successful";
+        echo "Your query was successful.";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
